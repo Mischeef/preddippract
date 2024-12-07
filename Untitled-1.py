@@ -16,3 +16,8 @@ epochs = 10
 batch_size = 32
 learning_rate = 1e-3
 num_points = 1024  # Количество точек для выборки из облака точек
+
+# --- Функции для обработки данных и текста ---
+def preprocess_text(text):
+    input_ids = tokenizer.encode(text, add_special_tokens=True, truncation=True, max_length=512)
+    return torch.tensor([input_ids])
