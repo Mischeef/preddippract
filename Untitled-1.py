@@ -24,3 +24,9 @@ bert_model = BertModel.from_pretrained('bert-base-uncased')
 def preprocess_text(text):
     input_ids = tokenizer.encode(text, add_special_tokens=True, truncation=True, max_length=512)
     return torch.tensor([input_ids])
+
+def get_text_embedding(text):
+    with torch.no_grad():
+        outputs = bert_model(text)
+        embeddings = outputs.last_hidden_state[:, 0, :]
+    return embeddings
