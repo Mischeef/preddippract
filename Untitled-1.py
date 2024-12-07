@@ -30,3 +30,24 @@ def get_text_embedding(text):
         outputs = bert_model(text)
         embeddings = outputs.last_hidden_state[:, 0, :]
     return embeddings
+
+# --- Класс датасета ---
+class ModelNetDataset(Dataset):
+    def __init__(self, root_dir, split='train', categories=None, transform=None):
+        self.root_dir = root_dir
+        self.split = split
+        self.categories = categories
+        self.transform = transform
+
+        self.data = []
+        self.labels = []
+
+        for category in os.listdir(root_dir):
+            if categories is not None and category not in categories:
+                continue
+
+            category_dir = os.path.join(root_dir, category, split)
+            for filename in os.listdir(category_dir):
+                if filename.endswith('.off'):
+                    self.data.append(os.path.join(category_dir, filename))
+                    self.labels.append(category)
