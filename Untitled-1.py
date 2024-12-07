@@ -121,3 +121,6 @@ class VAE(nn.Module):
          # --- Декодер ---
         z = torch.cat([z, text_embedding], dim=1)
         x = F.relu(self.dec_fc1(z))
+        x = F.relu(self.dec_fc2(x))
+        x = self.dec_fc3(x)
+        return x, mu, logvar
