@@ -141,6 +141,10 @@ for epoch in range(epochs):
     for batch_idx, (data, labels) in enumerate(train_loader):
         # 1. Обработка облаков точек
         data = torch.stack([sample_points(d, num_points) for d in data], dim=0)
+        
         # 2. Получение текстовых эмбеддингов
         text_descriptions = ['описание для объекта ' + str(l.item()) for l in labels]
         text_embeddings = get_text_embedding(text_descriptions)
+
+        # 3. Прямой проход
+        recon_data, mu, logvar = model(data.float(), text_embeddings.float())
