@@ -58,3 +58,12 @@ class ModelNetDataset(Dataset):
     def __getitem__(self, idx):
         path = self.data[idx]
         label = self.labels[idx]
+        # Загружаем облако точек из файла .off
+        pointcloud = PyntCloud.from_file(path)
+        points = pointcloud.points.values
+
+        # Применяем преобразования (опционально)
+        if self.transform:
+            points = self.transform(points)
+
+        return points, label
