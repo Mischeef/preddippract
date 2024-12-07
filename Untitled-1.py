@@ -107,3 +107,9 @@ class VAE(nn.Module):
         std = torch.exp(0.5 * logvar)
         eps = torch.randn_like(std)
         return mu + eps * std
+    
+    def forward(self, x, text_embedding):
+        x = F.relu(self.enc_conv1(x))
+        x = F.relu(self.enc_conv2(x))
+        x = F.relu(self.enc_conv3(x))
+        x = torch.max(x, dim=2)[0]  # Global max pooling
