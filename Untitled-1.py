@@ -129,3 +129,15 @@ def vae_loss(recon_x, x, mu, logvar):
     recon_loss = F.mse_loss(recon_x, x, reduction='sum')
     kl_loss = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
     return recon_loss + kl_loss
+
+# --- Создание модели, оптимизатора и даталоадеров ---
+model = VAE(latent_dim, text_embedding_dim)
+optimizer = Adam(model.parameters(), lr=learning_rate)
+train_dataset = ModelNetDataset(root_dir='./data/features/ModelNet10', split='train', categories=['chair', 'table'])
+train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+
+# --- Цикл обучения ---
+for epoch in range(epochs):
+    for batch_idx, (data, labels) in enumerate(train_loader):
+        # 1. Обработка облаков точек
+        data = torch.stack([sample_points(d, num_points) for d in data], dim=0)
