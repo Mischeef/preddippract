@@ -151,3 +151,8 @@ for epoch in range(epochs):
 
         # 4. Вычисление функции потерь
         loss = vae_loss(recon_data, data.float(), mu, logvar)
+
+        # 5. Обратный проход и шаг оптимизатора
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
