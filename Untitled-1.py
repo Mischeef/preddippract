@@ -67,3 +67,17 @@ class ModelNetDataset(Dataset):
             points = self.transform(points)
 
         return points, label
+    
+    # --- Функция для выборки фиксированного количества точек ---
+def sample_points(pointcloud, num_points):
+    """Выбирает фиксированное количество точек из облака точек."""
+    pointcloud = torch.tensor(pointcloud).float()
+    N, C = pointcloud.shape
+    if N < num_points:
+        # Дублируем точки, если их меньше, чем нужно
+        pointcloud = pointcloud.repeat(int(np.ceil(num_points / N)), 1)
+    elif N > num_points:
+        # Выбираем случайное подмножество точек
+        idx = torch.randperm(N)[:num_points]
+        pointcloud = pointcloud[idx]
+    return pointcloud
