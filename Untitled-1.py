@@ -81,3 +81,10 @@ def sample_points(pointcloud, num_points):
         idx = torch.randperm(N)[:num_points]
         pointcloud = pointcloud[idx]
     return pointcloud
+
+# --- Класс VAE ---
+class VAE(nn.Module):
+    def __init__(self, latent_dim, text_embedding_dim):
+        super(VAE, self).__init__()
+        self.latent_dim = latent_dim
+        self.text_embedding_dim = text_embedding_dim
