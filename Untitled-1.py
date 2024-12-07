@@ -113,6 +113,10 @@ class VAE(nn.Module):
         x = F.relu(self.enc_conv2(x))
         x = F.relu(self.enc_conv3(x))
         x = torch.max(x, dim=2)[0]  # Global max pooling
+        x = torch.cat([x, text_embedding], dim=1)
+        mu = self.enc_fc_mu(x)
+        logvar = self.enc_fc_logvar(x)
+        z = self.reparameterize(mu, logvar)
 
          # --- Декодер ---
         z = torch.cat([z, text_embedding], dim=1)
