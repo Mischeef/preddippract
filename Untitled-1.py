@@ -124,3 +124,5 @@ class VAE(nn.Module):
         x = F.relu(self.dec_fc2(x))
         x = self.dec_fc3(x)
         return x, mu, logvar
+    # --- Функция потерь для VAE ---
+def vae_loss(recon_x, x, mu, logvar):
