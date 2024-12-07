@@ -96,3 +96,14 @@ class VAE(nn.Module):
         self.enc_conv3 = nn.Conv1d(128, 256, 1)
         self.enc_fc_mu = nn.Linear(256 + text_embedding_dim, latent_dim)
         self.enc_fc_logvar = nn.Linear(256 + text_embedding_dim, latent_dim)
+
+         # --- Декодер ---
+        # Вход: латентный вектор (latent_dim)
+        self.dec_fc1 = nn.Linear(latent_dim + text_embedding_dim, 256)
+        self.dec_fc2 = nn.Linear(256, 256)
+        self.dec_fc3 = nn.Linear(256, 3)
+
+    def reparameterize(self, mu, logvar):
+        std = torch.exp(0.5 * logvar)
+        eps = torch.randn_like(std)
+        return mu + eps * std
