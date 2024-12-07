@@ -51,3 +51,6 @@ class ModelNetDataset(Dataset):
                 if filename.endswith('.off'):
                     self.data.append(os.path.join(category_dir, filename))
                     self.labels.append(category)
+
+    def __len__(self):
+        return len(self.data)
