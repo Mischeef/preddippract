@@ -88,3 +88,11 @@ class VAE(nn.Module):
         super(VAE, self).__init__()
         self.latent_dim = latent_dim
         self.text_embedding_dim = text_embedding_dim
+
+     # --- Энкодер ---
+        # Вход: облако точек (N, 3)
+        self.enc_conv1 = nn.Conv1d(3, 64, 1)
+        self.enc_conv2 = nn.Conv1d(64, 128, 1)
+        self.enc_conv3 = nn.Conv1d(128, 256, 1)
+        self.enc_fc_mu = nn.Linear(256 + text_embedding_dim, latent_dim)
+        self.enc_fc_logvar = nn.Linear(256 + text_embedding_dim, latent_dim)
