@@ -1,0 +1,7 @@
+pip install torch
+pip install numpy
+pip install matplotlib
+pip install scikit-learn
+pip install pyntcloud
+pip install transformers
+pip install mpl_toolkits
