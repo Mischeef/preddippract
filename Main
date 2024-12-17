@@ -1,0 +1,261 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyP6XsxG4bb+JNrXcSJhggxw",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Mischeef/preddippract/blob/main/Main\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "Av-uqFLX_tIE",
+        "outputId": "352bc590-fd0e-404b-9cd6-8dbc344903e7"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Cloning into 'shap-e'...\n",
+            "remote: Enumerating objects: 336, done.\u001b[K\n",
+            "remote: Counting objects: 100% (260/260), done.\u001b[K\n",
+            "remote: Compressing objects: 100% (241/241), done.\u001b[K\n",
+            "remote: Total 336 (delta 41), reused 218 (delta 18), pack-reused 76 (from 1)\u001b[K\n",
+            "Receiving objects: 100% (336/336), 11.72 MiB | 21.10 MiB/s, done.\n",
+            "Resolving deltas: 100% (44/44), done.\n"
+          ]
+        }
+      ],
+      "source": [
+        "!git clone https://github.com/openai/shap-e"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "%cd shap-e"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "7EYOfSps_woH",
+        "outputId": "890e4a5e-62cd-4570-96b4-fd079a4b1bd3"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "/content/shap-e\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install -e ."
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "t6O8J5d9_zUv",
+        "outputId": "e205a03b-3ca4-4927-e766-b41fa6b82cb1"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Obtaining file:///content/shap-e\n",
+            "  Preparing metadata (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "Collecting clip@ git+https://github.com/openai/CLIP.git (from shap-e==0.0.0)\n",
+            "  Cloning https://github.com/openai/CLIP.git to /tmp/pip-install-3doogdwn/clip_d06eb44d0e7a4d21a31e953a6a256bca\n",
+            "  Running command git clone --filter=blob:none --quiet https://github.com/openai/CLIP.git /tmp/pip-install-3doogdwn/clip_d06eb44d0e7a4d21a31e953a6a256bca\n",
+            "  Resolved https://github.com/openai/CLIP.git to commit dcba3cb2e2827b402d2701e7e1c7d9fed8a20ef1\n",
+            "  Preparing metadata (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "Requirement already satisfied: filelock in /usr/local/lib/python3.10/dist-packages (from shap-e==0.0.0) (3.16.1)\n",
+            "Requirement already satisfied: Pillow in /usr/local/lib/python3.10/dist-packages (from shap-e==0.0.0) (11.0.0)\n",
+            "Requirement already satisfied: torch in /usr/local/lib/python3.10/dist-packages (from shap-e==0.0.0) (2.5.1+cu121)\n",
+            "Collecting fire (from shap-e==0.0.0)\n",
+            "  Downloading fire-0.7.0.tar.gz (87 kB)\n",
+            "\u001b[2K     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m87.2/87.2 kB\u001b[0m \u001b[31m6.5 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25h  Preparing metadata (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "Requirement already satisfied: humanize in /usr/local/lib/python3.10/dist-packages (from shap-e==0.0.0) (4.11.0)\n",
+            "Requirement already satisfied: requests in /usr/local/lib/python3.10/dist-packages (from shap-e==0.0.0) (2.32.3)\n",
+            "Requirement already satisfied: tqdm in /usr/local/lib/python3.10/dist-packages (from shap-e==0.0.0) (4.66.6)\n",
+            "Requirement already satisfied: matplotlib in /usr/local/lib/python3.10/dist-packages (from shap-e==0.0.0) (3.8.0)\n",
+            "Requirement already satisfied: scikit-image in /usr/local/lib/python3.10/dist-packages (from shap-e==0.0.0) (0.24.0)\n",
+            "Requirement already satisfied: scipy in /usr/local/lib/python3.10/dist-packages (from shap-e==0.0.0) (1.13.1)\n",
+            "Requirement already satisfied: numpy in /usr/local/lib/python3.10/dist-packages (from shap-e==0.0.0) (1.26.4)\n",
+            "Collecting blobfile (from shap-e==0.0.0)\n",
+            "  Downloading blobfile-3.0.0-py3-none-any.whl.metadata (15 kB)\n",
+            "Collecting pycryptodomex>=3.8 (from blobfile->shap-e==0.0.0)\n",
+            "  Downloading pycryptodomex-3.21.0-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.4 kB)\n",
+            "Requirement already satisfied: urllib3<3,>=1.25.3 in /usr/local/lib/python3.10/dist-packages (from blobfile->shap-e==0.0.0) (2.2.3)\n",
+            "Requirement already satisfied: lxml>=4.9 in /usr/local/lib/python3.10/dist-packages (from blobfile->shap-e==0.0.0) (5.3.0)\n",
+            "Collecting ftfy (from clip@ git+https://github.com/openai/CLIP.git->shap-e==0.0.0)\n",
+            "  Downloading ftfy-6.3.1-py3-none-any.whl.metadata (7.3 kB)\n",
+            "Requirement already satisfied: packaging in /usr/local/lib/python3.10/dist-packages (from clip@ git+https://github.com/openai/CLIP.git->shap-e==0.0.0) (24.2)\n",
+            "Requirement already satisfied: regex in /usr/local/lib/python3.10/dist-packages (from clip@ git+https://github.com/openai/CLIP.git->shap-e==0.0.0) (2024.9.11)\n",
+            "Requirement already satisfied: torchvision in /usr/local/lib/python3.10/dist-packages (from clip@ git+https://github.com/openai/CLIP.git->shap-e==0.0.0) (0.20.1+cu121)\n",
+            "Requirement already satisfied: termcolor in /usr/local/lib/python3.10/dist-packages (from fire->shap-e==0.0.0) (2.5.0)\n",
+            "Requirement already satisfied: contourpy>=1.0.1 in /usr/local/lib/python3.10/dist-packages (from matplotlib->shap-e==0.0.0) (1.3.1)\n",
+            "Requirement already satisfied: cycler>=0.10 in /usr/local/lib/python3.10/dist-packages (from matplotlib->shap-e==0.0.0) (0.12.1)\n",
+            "Requirement already satisfied: fonttools>=4.22.0 in /usr/local/lib/python3.10/dist-packages (from matplotlib->shap-e==0.0.0) (4.55.3)\n",
+            "Requirement already satisfied: kiwisolver>=1.0.1 in /usr/local/lib/python3.10/dist-packages (from matplotlib->shap-e==0.0.0) (1.4.7)\n",
+            "Requirement already satisfied: pyparsing>=2.3.1 in /usr/local/lib/python3.10/dist-packages (from matplotlib->shap-e==0.0.0) (3.2.0)\n",
+            "Requirement already satisfied: python-dateutil>=2.7 in /usr/local/lib/python3.10/dist-packages (from matplotlib->shap-e==0.0.0) (2.8.2)\n",
+            "Requirement already satisfied: charset-normalizer<4,>=2 in /usr/local/lib/python3.10/dist-packages (from requests->shap-e==0.0.0) (3.4.0)\n",
+            "Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.10/dist-packages (from requests->shap-e==0.0.0) (3.10)\n",
+            "Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.10/dist-packages (from requests->shap-e==0.0.0) (2024.8.30)\n",
+            "Requirement already satisfied: networkx>=2.8 in /usr/local/lib/python3.10/dist-packages (from scikit-image->shap-e==0.0.0) (3.4.2)\n",
+            "Requirement already satisfied: imageio>=2.33 in /usr/local/lib/python3.10/dist-packages (from scikit-image->shap-e==0.0.0) (2.36.1)\n",
+            "Requirement already satisfied: tifffile>=2022.8.12 in /usr/local/lib/python3.10/dist-packages (from scikit-image->shap-e==0.0.0) (2024.12.12)\n",
+            "Requirement already satisfied: lazy-loader>=0.4 in /usr/local/lib/python3.10/dist-packages (from scikit-image->shap-e==0.0.0) (0.4)\n",
+            "Requirement already satisfied: typing-extensions>=4.8.0 in /usr/local/lib/python3.10/dist-packages (from torch->shap-e==0.0.0) (4.12.2)\n",
+            "Requirement already satisfied: jinja2 in /usr/local/lib/python3.10/dist-packages (from torch->shap-e==0.0.0) (3.1.4)\n",
+            "Requirement already satisfied: fsspec in /usr/local/lib/python3.10/dist-packages (from torch->shap-e==0.0.0) (2024.10.0)\n",
+            "Requirement already satisfied: sympy==1.13.1 in /usr/local/lib/python3.10/dist-packages (from torch->shap-e==0.0.0) (1.13.1)\n",
+            "Requirement already satisfied: mpmath<1.4,>=1.1.0 in /usr/local/lib/python3.10/dist-packages (from sympy==1.13.1->torch->shap-e==0.0.0) (1.3.0)\n",
+            "Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.10/dist-packages (from python-dateutil>=2.7->matplotlib->shap-e==0.0.0) (1.17.0)\n",
+            "Requirement already satisfied: wcwidth in /usr/local/lib/python3.10/dist-packages (from ftfy->clip@ git+https://github.com/openai/CLIP.git->shap-e==0.0.0) (0.2.13)\n",
+            "Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.10/dist-packages (from jinja2->torch->shap-e==0.0.0) (3.0.2)\n",
+            "Downloading blobfile-3.0.0-py3-none-any.whl (75 kB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m75.4/75.4 kB\u001b[0m \u001b[31m5.7 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading pycryptodomex-3.21.0-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.3 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m2.3/2.3 MB\u001b[0m \u001b[31m50.6 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading ftfy-6.3.1-py3-none-any.whl (44 kB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m44.8/44.8 kB\u001b[0m \u001b[31m3.5 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hBuilding wheels for collected packages: clip, fire\n",
+            "  Building wheel for clip (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "  Created wheel for clip: filename=clip-1.0-py3-none-any.whl size=1369489 sha256=ca58a5b64a67d9f528315e9404a15df254a184acfdca012b2d7ae1ed985c1744\n",
+            "  Stored in directory: /tmp/pip-ephem-wheel-cache-ipxvtau1/wheels/da/2b/4c/d6691fa9597aac8bb85d2ac13b112deb897d5b50f5ad9a37e4\n",
+            "  Building wheel for fire (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "  Created wheel for fire: filename=fire-0.7.0-py3-none-any.whl size=114249 sha256=3bc9d919ea023ee25be745f769bfec378b228bbea2f6687e594ee93107db9408\n",
+            "  Stored in directory: /root/.cache/pip/wheels/19/39/2f/2d3cadc408a8804103f1c34ddd4b9f6a93497b11fa96fe738e\n",
+            "Successfully built clip fire\n",
+            "Installing collected packages: pycryptodomex, ftfy, fire, blobfile, clip, shap-e\n",
+            "  Running setup.py develop for shap-e\n",
+            "Successfully installed blobfile-3.0.0 clip-1.0 fire-0.7.0 ftfy-6.3.1 pycryptodomex-3.21.0 shap-e-0.0.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import torch\n",
+        "\n",
+        "from shap_e.diffusion.sample import sample_latents\n",
+        "from shap_e.diffusion.gaussian_diffusion import diffusion_from_config\n",
+        "from shap_e.models.download import load_model, load_config\n",
+        "from shap_e.util.notebooks import create_pan_cameras, decode_latent_images, gif_widget"
+      ],
+      "metadata": {
+        "id": "-qpA8sB-_1nN"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')"
+      ],
+      "metadata": {
+        "id": "9uM5K3lCCC8o"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "xm = load_model('transmitter', device=device)\n",
+        "model = load_model('text300M', device=device)\n",
+        "diffusion = diffusion_from_config(load_config('diffusion'))"
+      ],
+      "metadata": {
+        "id": "HD-wo88bCLQZ"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "batch_size = 1\n",
+        "guidance_scale = 15.0\n",
+        "prompt = \"a red plane\"\n",
+        "\n",
+        "latents = sample_latents(\n",
+        "    batch_size=batch_size,\n",
+        "    model=model,\n",
+        "    diffusion=diffusion,\n",
+        "    guidance_scale=guidance_scale,\n",
+        "    model_kwargs=dict(texts=[prompt] * batch_size),\n",
+        "    progress=True,\n",
+        "    clip_denoised=True,\n",
+        "    use_fp16=True,\n",
+        "    use_karras=True,\n",
+        "    karras_steps=64,\n",
+        "    sigma_min=1e-3,\n",
+        "    sigma_max=160,\n",
+        "    s_churn=0,\n",
+        ")"
+      ],
+      "metadata": {
+        "id": "eYNTGjQ8CbRX"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "render_mode = 'nerf' # you can change this to 'stf'\n",
+        "size = 64 # this is the size of the renders; higher values take longer to render.\n",
+        "\n",
+        "cameras = create_pan_cameras(size, device)\n",
+        "for i, latent in enumerate(latents):\n",
+        "    images = decode_latent_images(xm, latent, cameras, rendering_mode=render_mode)\n",
+        "    display(gif_widget(images))"
+      ],
+      "metadata": {
+        "id": "qjkxxhYCDFkT"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
