@@ -1,0 +1,11 @@
+torch
+ipywidgets
+IPython
+shap_e
+googletrans==4.0.0-rc1
+imageio
+matplotlib
+numpy
+scikit-learn
+torchvision
+mpl_toolkits
