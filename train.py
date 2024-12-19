@@ -36,11 +36,14 @@ class ModelNet10Dataset(Dataset):
             vertices = self.transform(vertices)
         return vertices, category
 
+# Укажите абсолютный путь к папке ModelNet10
+modelnet10_path = 'c:/Users/gerpv/Desktop/predpp/preddippract/ModelNet10'
+
 # Пример использования
-train_dataset = ModelNet10Dataset(root_dir='ModelNet10', mode='train')
+train_dataset = ModelNet10Dataset(root_dir=modelnet10_path, mode='train')
 train_dataloader = DataLoader(train_dataset, batch_size=4, shuffle=True)
 
-test_dataset = ModelNet10Dataset(root_dir='ModelNet10', mode='test')
+test_dataset = ModelNet10Dataset(root_dir=modelnet10_path, mode='test')
 test_dataloader = DataLoader(test_dataset, batch_size=4, shuffle=False)
 
 # Настройка модели и оптимизатора
