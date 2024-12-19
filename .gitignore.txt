@@ -1,1 +1,2 @@
 shap-e/
+ModelNet10/
