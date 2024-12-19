@@ -13,18 +13,20 @@ class ModelNet10Dataset(Dataset):
         self.root_dir = root_dir
         self.transform = transform
         self.mode = mode
-        self.data = self._load_data()
+        self.data, self.categories = self._load_data()
+        self.label_map = {label: idx for idx, label in enumerate(self.categories)}
 
     def _load_data(self):
         data = []
-        categories = os.listdir(self.root_dir)
-        for category in categories:
+        categories = set()
+        for category in os.listdir(self.root_dir):
             category_path = os.path.join(self.root_dir, category, self.mode)
             if os.path.exists(category_path):
+                categories.add(category)
                 for file in os.listdir(category_path):
                     if file.endswith('.off'):
                         data.append((os.path.join(category_path, file), category))
-        return data
+        return data, list(categories)
 
     def __len__(self):
         return len(self.data)
@@ -33,16 +35,17 @@ class ModelNet10Dataset(Dataset):
         file_path, category = self.data[idx]
         mesh = trimesh.load(file_path, force='mesh')
         vertices = mesh.vertices  # Получаем вершины модели
+        label = self.label_map[category]
         if self.transform:
             vertices = self.transform(vertices)
-        return vertices, category
+        return vertices, label
 
 # Функция для коллатного батча с паддингом
 def collate_fn(batch):
-    vertices, categories = zip(*batch)
+    vertices, labels = zip(*batch)
     vertices_padded = pad_sequence([torch.tensor(v, dtype=torch.float32) for v in vertices], batch_first=True)
-    categories = torch.tensor(categories)
-    return vertices_padded, categories
+    labels = torch.tensor(labels, dtype=torch.long)
+    return vertices_padded, labels
 
 # Укажите абсолютный путь к папке ModelNet10
 modelnet10_path = 'c:/Users/gerpv/Desktop/predpp/preddippract/ModelNet10'
@@ -68,11 +71,11 @@ losses = []
 for epoch in range(num_epochs):
     model.train()
     epoch_loss = 0
-    for vertices, categories in train_dataloader:
+    for vertices, labels in train_dataloader:
         vertices = vertices.to(device)
-        categories = categories.to(device)
+        labels = labels.to(device)
         optimizer.zero_grad()
-        loss = diffusion.training_losses(model, vertices, categories)
+        loss = diffusion.training_losses(model, vertices, labels)
         loss.backward()
         optimizer.step()
         epoch_loss += loss.item()
