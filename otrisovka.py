@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+import tkinter as tk
+from tkinter import filedialog
 
 def read_off(file_path):
     verts = []
@@ -28,7 +30,13 @@ def plot_off(verts, faces):
     ax.set_zlabel('Z')
     plt.show()
 
+def select_file_and_plot():
+    root = tk.Tk()
+    root.withdraw()  # Скрыть основное окно tkinter
+    file_path = filedialog.askopenfilename(title="Select OFF file", filetypes=[("OFF files", "*.off")])
+    if file_path:
+        verts, faces = read_off(file_path)
+        plot_off(verts, faces)
+
 # Пример использования
-file_path = r'C:\Users\gerpv\Desktop\predpp\preddippract\ModelNet10\bed\test\bed_0517.off'
-verts, faces = read_off(file_path)
-plot_off(verts, faces)
+select_file_and_plot()
