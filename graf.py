@@ -29,9 +29,16 @@ accuracies = [
     69.27, 73.02, 72.80, 72.47, 78.41, 78.96
 ]
 
+# Усреднение потерь для каждой эпохи
+average_losses = []
+for i in range(1, 21):
+    epoch_losses = losses[(i-1)*12:i*12]
+    average_loss = sum(epoch_losses) / len(epoch_losses)
+    average_losses.append(average_loss)
+
 # График потерь
 plt.figure(figsize=(10, 5))
-plt.plot(epochs, losses, label='Training Loss')
+plt.plot(epochs, average_losses, label='Training Loss')
 plt.xlabel('Epoch')
 plt.ylabel('Loss')
 plt.title('Training Loss Over Epochs')
