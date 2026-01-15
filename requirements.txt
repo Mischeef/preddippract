@@ -1,7 +1,7 @@
 torch
 ipywidgets
 IPython
-Shap-E
+Shap-E - устанавливать не нужно, генератор установит его сам
 googletrans==4.0.0-rc1
 imageio
 matplotlib
